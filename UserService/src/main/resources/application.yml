@@ -1,0 +1,136 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: prod
+  application:
+    name: USER-SERVICE
+
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/microservices
+#    username: root
+#    password: pritam@123
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQLDialect
+
+#For Upload file we have to set the size of the file
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+#Config Server--> to fetch common configuration from server
+  config:
+    import: configserver:http://localhost:8085
+
+
+#For Eureka Discovery Client
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
+
+
+
+#To enable actuator
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+#to Configure resilience4j
+
+resilience4j:
+  circuitbreaker:
+    instances:
+#      RATING_HOTEL_ALL_BREAKER:
+#        registerHealthIndicator: true
+#        eventConsumerBufferSize: 10
+#        failureRateThreshold: 50
+#        minimumNumberOfCalls: 5
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#        waitDurationInOpenState: 5s
+#        permittedNumberOfCallsInHalfOpenState: 4
+#        slidingWindowSize: 10
+#        slidingWindowType: COUNT_BASED
+
+      RATING_HOTEL_BREAKER:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 4
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+#      RATING_HOTEL_EMAIL_BREAKER:
+#        registerHealthIndicator: true
+#        eventConsumerBufferSize: 10
+#        failureRateThreshold: 50
+#        minimumNumberOfCalls: 5
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#        waitDurationInOpenState: 5s
+#        permittedNumberOfCallsInHalfOpenState: 4
+#        slidingWindowSize: 10
+#        slidingWindowType: COUNT_BASED
+
+      RATING_DELETE_BREAKER:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 4
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+      RATING_DELETE_EMAIL_BREAKER:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 4
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+#Retry Configuration
+  retry:
+    instances:
+      RATING_HOTEL_ALL_RETRY:
+        maxAttempts: 3
+        waitDuration: 2s
+        failAfterMaxAttempts: true
+
+#RateLimiter
+  ratelimiter:
+    instances:
+      RATING_HOTEL_EMAIL_RATELIMITER:
+        limitRefreshPeriod: 5s
+        limitForPeriod: 2
+        timeoutDuration: 0s
+
+
+
+
+
