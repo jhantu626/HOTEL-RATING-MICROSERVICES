@@ -26,16 +26,6 @@ spring:
             predicates:
               - Path=api/hotels/**
 
-#Okta Configuration
-okta:
-  oauth2:
-    issuer: https://dev-98412062.okta.com/oauth2/default
-    audience: api://default
-    client-id: 0oagg6i6buFujGpbx5d7
-    client-secret: EK1KhW2NYaWbYwmJHTgLn4jRb4vrd6WyoIILcweFQb-tqsIU_z7gaKgQ96M2CT_m
-    scopes: openid, profile, email, offline_access
-
-
 
 #eureka:
 #  instance:
